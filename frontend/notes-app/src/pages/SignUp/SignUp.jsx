@@ -4,12 +4,14 @@ import { useState } from "react";
 import PasswordInput from "../../components/Input/PasswordInput";
 import { Link } from "react-router-dom";
 import { validateEmail } from "../../utils/helper";
+import api from "../../../api";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -28,11 +30,34 @@ const SignUp = () => {
     }
 
     setError("");
+
+    // const payload = {
+    //   user: { username:name, email, password }
+    // };
+
+    // try {
+    //   // Make POST request using the API instance
+    //   const response = await api.post("/signup", payload);
+
+    //   // Handle successful signup (you might get a token or a message from the backend)
+    //   setSuccessMessage("Account created successfully! You can now log in.");
+
+    //   setName("");
+    //   setEmail("");
+    //   setPassword("");
+    // } catch (err) {
+    //   // Handle errors from the backend
+    //   if (err.response && err.response.data) {
+    //     setError(err.response.data.error || "Something went wrong.");
+    //   } else {
+    //     setError("Network error. Please try again.");
+    //   }
+    // }
   };
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex items-center justify-center mt-28">
         <div className="w-96 border rounded bg-white px-7 py-10">
           <form onSubmit={handleSignUp}>
@@ -58,6 +83,9 @@ const SignUp = () => {
             />
 
             {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
+            {successMessage && (
+              <p className="text-green-500 text-xs pb-1">{successMessage}</p>
+            )}
 
             <button type="submit" className="btn-primary">
               Create Account
